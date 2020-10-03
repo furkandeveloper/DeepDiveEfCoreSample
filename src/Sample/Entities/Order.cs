@@ -16,6 +16,11 @@ namespace Sample.Entities
         public Guid OrderId { get; set; }
 
         /// <summary>
+        /// fk
+        /// </summary>
+        public Guid CustomerId { get; set; }
+
+        /// <summary>
         /// Order code || order number
         /// </summary>
         public string OrderCode { get; set; }
