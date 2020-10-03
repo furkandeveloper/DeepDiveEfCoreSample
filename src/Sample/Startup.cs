@@ -30,7 +30,7 @@ namespace Sample
 
             services.AddDbContext<SampleDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("ConnectionStrings:SampleDbConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("SampleDbConnection"));
             });
         }
 
