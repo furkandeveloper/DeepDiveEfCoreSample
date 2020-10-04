@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Sample.Generations
 {
+    /// <summary>
+    /// Order code value generator.
+    /// </summary>
     public class OrderCodeGenerator : ValueGenerator
     {
         public override bool GeneratesTemporaryValues => false;
