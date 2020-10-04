@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Sample.Entities;
 using Sample.Generations;
 using System;
@@ -26,7 +27,7 @@ namespace Sample.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
+            base.OnConfiguring(optionsBuilder.UseLoggerFactory(loggerFactory));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -73,7 +74,7 @@ namespace Sample.Context
                 entity
                     .Property(p => p.UpdateDate)
                     .HasValueGenerator<DateTimeGenerator>()
-                    .ValueGeneratedOnAddOrUpdate().
+                    .ValueGeneratedOnAdd().
                     IsRequired();
 
                 entity
@@ -127,5 +128,15 @@ namespace Sample.Context
                     .HasForeignKey(fk => fk.CustomerId);
             });
         }
+
+        public static readonly ILoggerFactory loggerFactory
+         = LoggerFactory.Create(builder =>
+         {
+             builder
+                 .AddFilter((category, level) =>
+                     category == DbLoggerCategory.Database.Command.Name
+                     && level == LogLevel.Information)
+                 .AddDebug();
+         });
     }
 }
