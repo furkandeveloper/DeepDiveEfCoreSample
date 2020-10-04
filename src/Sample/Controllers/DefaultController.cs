@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Sample.Context;
 using Sample.Entities;
 using System;
@@ -42,6 +43,17 @@ namespace Sample.Controllers
             }
             await dbContext.Customers.AddRangeAsync(customers);
             await dbContext.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpGet("viewFunction")]
+        public async Task<IActionResult> GetDataFromViewFunctionAsync()
+        {
+            dbContext.Database.ExecuteSqlRaw(
+                            @"CREATE VIEW vw_KeylessCustomerEntity AS 
+                            SELECT Name FROM Customers");
+
+            var data = dbContext.KeylessCustomerEntities.ToList();
             return NoContent();
         }
     }

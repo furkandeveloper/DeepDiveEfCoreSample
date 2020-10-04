@@ -23,6 +23,8 @@ namespace Sample.Context
         public virtual DbSet<Customer> Customers { get; set; }
 
         public virtual DbSet<Order> Orders { get; set; }
+
+        public virtual DbSet<KeylessCustomerEntity> KeylessCustomerEntities { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -33,6 +35,11 @@ namespace Sample.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<KeylessCustomerEntity>(entity =>
+            {
+                entity.ToView("vw_KeylessCustomerEntity");
+            }); 
 
             modelBuilder.Entity<Customer>(entity =>
             {
