@@ -26,11 +26,11 @@ namespace Sample.Controllers
             return Ok();
         }
 
-        [HttpGet("")]
+        [HttpGet("insertMultipleCustomer")]
         public async Task<IActionResult> InsertMultipleCustomerAsync()
         {
             List<Customer> customers = new List<Customer>();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 var customer = new Customer()
                 {
