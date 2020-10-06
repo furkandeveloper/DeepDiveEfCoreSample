@@ -25,6 +25,7 @@ namespace Sample.Controllers
         public async Task<IActionResult> GetDataAsync()
         {
             var data = dbContext.Customers.ToList();
+            var dataIgnoreGlobalFilter = dbContext.Customers.IgnoreQueryFilters().ToList();
             return Ok();
         }
 

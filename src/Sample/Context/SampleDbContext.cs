@@ -88,6 +88,9 @@ namespace Sample.Context
                     .HasMany(m => m.Orders)
                     .WithOne(o => o.Customer)
                     .HasForeignKey(fk => fk.CustomerId);
+
+                entity
+                    .HasQueryFilter(x => x.IsActive && x.CreateDate > DateTime.UtcNow.AddDays(-30));
             });
 
             modelBuilder.Entity<Order>(entity =>
