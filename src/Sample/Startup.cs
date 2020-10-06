@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Sample.Context;
+using Sample.Interceptors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,19 +35,21 @@ namespace Sample
                     opts.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
-                    services.AddDbContext<SampleDbContext>(options =>
+                    
+            services.AddDbContext<SampleDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SampleDbConnection"),sqlOptions=>
                 {
                     sqlOptions.EnableRetryOnFailure();
-                });
+                })
+                .AddInterceptors(new SampleInterception());
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,SampleDbContext dbContext)
         {
-            dbContext.Database.Migrate();
+            //dbContext.Database.Migrate();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

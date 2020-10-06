@@ -22,8 +22,9 @@ namespace Sample.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetIncludeQueryAsync()
+        public async Task<IActionResult> GetDataAsync()
         {
+            var data = dbContext.Customers.ToList();
             return Ok();
         }
 
