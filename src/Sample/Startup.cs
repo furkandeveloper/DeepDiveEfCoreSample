@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using Sample.Context;
 using System;
 using System.Collections.Generic;
@@ -26,11 +27,19 @@ namespace Sample
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddNewtonsoftJson(opts =>
+                {
+                    opts.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    opts.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
-            services.AddDbContext<SampleDbContext>(options =>
+                    services.AddDbContext<SampleDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("SampleDbConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("SampleDbConnection"),sqlOptions=>
+                {
+                    sqlOptions.EnableRetryOnFailure();
+                });
             });
         }
 
