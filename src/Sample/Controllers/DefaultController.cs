@@ -70,5 +70,23 @@ namespace Sample.Controllers
             var data = dbContext.KeylessCustomerEntities.ToList();
             return NoContent();
         }
+
+        [HttpGet("getQuery")]
+        public async Task<IActionResult> GetQueryAsync()
+        {
+            var query = dbContext.Customers.Where(c => c.Name == "customer");
+            return Ok(query.ToQueryString());
+        }
+
+        [HttpGet("splitQuery")]
+        public async Task<IActionResult> GetSplitQueryAsync()
+        {
+            var query = dbContext
+                            .Customers
+                            .AsSplitQuery()
+                            .Include(x=>x.Orders.OrderBy(a=>a.OrderId).Take(5))
+                            .ToList();
+            return NoContent();
+        }
     }
 }
