@@ -107,8 +107,7 @@ namespace Sample.Context
 
                 entity
                     .Property(p => p.IsShipped)
-                    .HasValueGenerator<FalseGenerator>()
-                    .ValueGeneratedOnAdd()
+                    .HasDefaultValueSql("0")
                     .IsRequired();
 
                 entity
@@ -126,7 +125,7 @@ namespace Sample.Context
                 entity
                     .Property(p => p.UpdateDate)
                     .HasValueGenerator<DateTimeGenerator>()
-                    .ValueGeneratedOnAddOrUpdate().
+                    .ValueGeneratedOnAdd().
                     IsRequired();
 
                 entity
