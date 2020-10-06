@@ -31,7 +31,7 @@ namespace Sample.Controllers
         public async Task<IActionResult> InsertMultipleCustomerAsync()
         {
             List<Customer> customers = new List<Customer>();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var customer = new Customer()
                 {
@@ -43,6 +43,20 @@ namespace Sample.Controllers
             }
             await dbContext.Customers.AddRangeAsync(customers);
             await dbContext.SaveChangesAsync();
+
+            //List<Order> orders = new List<Order>();
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    orders.Add(new Order()
+            //    {
+            //        CustomerId = customers[i].CustomerId,
+            //        Total = i*85,
+            //        UpdateDate = DateTime.UtcNow
+            //    });
+            //}
+
+            //await dbContext.Orders.AddRangeAsync(orders);
+            //await dbContext.SaveChangesAsync();
             return NoContent();
         }
 
