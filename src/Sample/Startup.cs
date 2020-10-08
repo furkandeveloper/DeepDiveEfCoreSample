@@ -42,12 +42,14 @@ namespace Sample
                 {
                     sqlOptions.EnableRetryOnFailure();
                 })
-                .AddInterceptors(new SampleInterception());
+                //.AddInterceptors(new SampleInterception())
+                .AddInterceptors(new StatsInterception());
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,SampleDbContext dbContext)
+        
         {
             dbContext.Database.Migrate();
             if (env.IsDevelopment())
