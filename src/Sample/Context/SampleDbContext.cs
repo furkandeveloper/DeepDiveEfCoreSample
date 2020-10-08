@@ -25,6 +25,8 @@ namespace Sample.Context
         public virtual DbSet<Order> Orders { get; set; }
 
         public virtual DbSet<KeylessCustomerEntity> KeylessCustomerEntities { get; set; }
+
+        public virtual DbSet<Stats> Stats { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -35,6 +37,17 @@ namespace Sample.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Stats>(entity =>
+            {
+                entity
+                    .HasKey(pk => pk.TransactionId);
+
+                entity
+                    .Property(p => p.TransactionId)
+                    .HasValueGenerator<GuidGenerator>()
+                    .ValueGeneratedOnAdd();
+            });
 
             modelBuilder.Entity<KeylessCustomerEntity>(entity =>
             {
