@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sample.Context
 {
-    public class SampleDbContext : DbContext
+    public class SampleDbContext : EasyProfilerDbContext
     {
         public SampleDbContext(DbContextOptions options) : base(options)
         {
